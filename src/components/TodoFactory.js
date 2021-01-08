@@ -12,10 +12,13 @@ const TodoFactory = ({ done }) => {
       <Todo>
         <LeftWrapper>
           <Icon done={done}>{done === true ? <FilledCircle /> : ""}</Icon>
-          <Title done={done}>123123</Title>
+          <ContentHolder>
+            <Title done={done}>123123</Title>
+            <Time>17:00</Time>
+          </ContentHolder>
         </LeftWrapper>
-        <Time>17:00</Time>
         <IoMdInformationCircleOutline
+          className="infoButton"
           size={22}
           color={Theme.hl2Color}
           display="none"
@@ -24,17 +27,24 @@ const TodoFactory = ({ done }) => {
       <Todo>
         <LeftWrapper>
           <Icon done={done}>{done === true ? <FilledCircle /> : ""}</Icon>
-          <Title done={done}>123123</Title>
+          <ContentHolder>
+            <Title done={done}>123123</Title>
+            <Time>17:00</Time>
+          </ContentHolder>
         </LeftWrapper>
-        <Time>17:00</Time>
         <IoMdInformationCircleOutline
+          className="infoButton"
           size={22}
           color={Theme.hl2Color}
           display="none"
         />
       </Todo>
       <ToolBar>
-        <IoMdAddCircleOutline size={22} color={Theme.panelFont2Color} />
+        <IoMdAddCircleOutline
+          size={22}
+          color={Theme.panelFont2Color}
+          opacity={0.5}
+        />
       </ToolBar>
     </Panel>
   );
@@ -50,6 +60,9 @@ const ToolBar = styled.div`
 
 const Time = styled.h3`
   color: ${(props) => props.theme.panelFont2Color};
+  font-size: 16px;
+  margin-top: 4px;
+  opacity: 0.8;
 `;
 
 const Title = styled.h3`
@@ -61,6 +74,10 @@ const Title = styled.h3`
     props.done === true
       ? props.theme.panelBg2Color
       : props.theme.panelFontColor};
+`;
+
+const ContentHolder = styled.div`
+  ${(props) => props.theme.CenterAlignment};
 `;
 
 const FilledCircle = styled.div`
@@ -94,6 +111,18 @@ const Todo = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 25px;
+
+  &:hover .infoButton {
+    display: block;
+  }
+
+  &:hover .timeText {
+    display: none;
+  }
+
+  &:focus {
+    background-color: red;
+  }
 `;
 
 const Panel = styled.div`
