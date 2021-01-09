@@ -1,44 +1,62 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {
-  IoMdInformationCircleOutline,
-  IoMdAddCircleOutline,
-} from "react-icons/io";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
+import Todo from "components/Todo";
 
-const TodoFactory = ({ done }) => {
+const tmpTodo = [
+  {
+    title: "dailyCode",
+    isDone: "false",
+    closingDate: "20200109",
+    clostingTime: "2200",
+    priority: "3",
+    repetitionType: "1",
+  },
+  {
+    title: "weeklyCode",
+    isDone: "false",
+    closingDate: "20200109",
+    clostingTime: "2200",
+    priority: "3",
+    repetitionType: "2",
+  },
+  {
+    title: "secondCode",
+    isDone: "false",
+    closingDate: "20200109",
+    clostingTime: "2200",
+    priority: "3",
+    repetitionType: "3",
+    specialRepetition: {
+      periodType: "1",
+      repetitionTerm: "2",
+    },
+  },
+  {
+    title: "weekendCode",
+    isDone: "false",
+    closingDate: "20200109",
+    clostingTime: "2200",
+    priority: "3",
+    repetitionType: "3",
+    specialRepetition: {
+      periodType: "2",
+      repetitionTerm: "1",
+      detailTerm: ["0", "6"],
+    },
+  },
+];
+
+const TodoFactory = ({ todoList = tmpTodo }) => {
+  // const [detailEditMode, setDetailEditMode] = useState(false);
+
   return (
     <Panel>
-      <Todo>
-        <LeftWrapper>
-          <Icon done={done}>{done === true ? <FilledCircle /> : ""}</Icon>
-          <ContentHolder>
-            <Title done={done}>123123</Title>
-            <Time>17:00</Time>
-          </ContentHolder>
-        </LeftWrapper>
-        <IoMdInformationCircleOutline
-          className="infoButton"
-          size={22}
-          color={Theme.hl2Color}
-          display="none"
-        />
-      </Todo>
-      <Todo>
-        <LeftWrapper>
-          <Icon done={done}>{done === true ? <FilledCircle /> : ""}</Icon>
-          <ContentHolder>
-            <Title done={done}>123123</Title>
-            <Time>17:00</Time>
-          </ContentHolder>
-        </LeftWrapper>
-        <IoMdInformationCircleOutline
-          className="infoButton"
-          size={22}
-          color={Theme.hl2Color}
-          display="none"
-        />
-      </Todo>
+      {todoList.map((todo, idx) => (
+        <Todo key={idx} todo={todo} />
+      ))}
+      <Todo done={false} />
       <ToolBar>
         <IoMdAddCircleOutline
           size={22}
@@ -58,77 +76,10 @@ const ToolBar = styled.div`
   height: 40px;
 `;
 
-const Time = styled.h3`
-  color: ${(props) => props.theme.panelFont2Color};
-  font-size: 16px;
-  margin-top: 4px;
-  opacity: 0.8;
-`;
-
-const Title = styled.h3`
-  margin-left: 13px;
-  text-decoration-line: ${(props) =>
-    props.done === true ? "line-through" : ""};
-  text-decoration-thickness: 1.5px;
-  color: ${(props) =>
-    props.done === true
-      ? props.theme.panelBg2Color
-      : props.theme.panelFontColor};
-`;
-
-const ContentHolder = styled.div`
-  ${(props) => props.theme.CenterAlignment};
-`;
-
-const FilledCircle = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.hl2Color};
-`;
-
-const Icon = styled.div`
-  ${(props) => props.theme.CenterAlignment};
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  border: solid 1px
-    ${(props) =>
-      props.done === true ? props.theme.hl2Color : props.theme.panelBg2Color};
-`;
-
-const LeftWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Todo = styled.div`
-  width: 100%;
-  height: 75px;
-  border-bottom: solid 1px ${(props) => props.theme.panelBg2Color};
-  color: ${(props) => props.theme.panelFontColor};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 25px;
-
-  &:hover .infoButton {
-    display: block;
-  }
-
-  &:hover .timeText {
-    display: none;
-  }
-
-  &:focus {
-    background-color: red;
-  }
-`;
-
 const Panel = styled.div`
+  ${(props) => props.theme.RoundBox};
   width: 50%;
   height: 85%;
-  border-radius: 2%;
   background-color: white;
   overflow: scroll;
 `;

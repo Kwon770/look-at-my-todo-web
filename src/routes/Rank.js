@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 const Rank = () => {
   return (
-    <Holder>
+    <Container>
       <h1>RANK</h1>
-    </Holder>
+    </Container>
   );
 };
 
-const Holder = styled.div``;
+const Container = styled.div``;
 
 export default Rank;

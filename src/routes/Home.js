@@ -10,23 +10,23 @@ const Home = () => {
   return (
     <>
       <Header></Header>
-      <PageHolder>
+      <Page>
         <TodoFactory />
         <Information>
-          <ProgressHolder>
-            <DateHolder>
-              <AlignHolder>
+          <ProgressWrapper>
+            <DateWrapper>
+              <AlignWrapper>
                 <DayOfWeek>Friday</DayOfWeek>
                 <Date>8th</Date>
-              </AlignHolder>
+              </AlignWrapper>
               <Month>January</Month>
-            </DateHolder>
+            </DateWrapper>
             <Figure>99</Figure>
             <FigureSymbol>/</FigureSymbol>
             <Figure>99</Figure>
-          </ProgressHolder>
+          </ProgressWrapper>
         </Information>
-      </PageHolder>
+      </Page>
     </>
   );
 };
@@ -43,7 +43,7 @@ const FigureSymbol = styled.h2`
 const Figure = styled(FigureSymbol)`
   margin: 0px;
 `;
-const ProgressHolder = styled.div`
+const ProgressWrapper = styled.div`
   display: flex;
   position: relative;
 `;
@@ -55,7 +55,7 @@ const Month = styled.h1`
   /* margin-top: 5px; */
 `;
 
-const AlignHolder = styled.div`
+const AlignWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
@@ -71,7 +71,7 @@ const DayOfWeek = styled.h1`
   margin-right: 10px;
 `;
 
-const DateHolder = styled.div`
+const DateWrapper = styled.div`
   align-items: center;
   position: absolute;
   top: -50%;
@@ -85,7 +85,7 @@ const DateHolder = styled.div`
 const Information = styled.div`
   width: 30%;
   height: 85%;
-  ${(props) => props.theme.CenterAlignment};
+  ${(props) => props.theme.ColumnCenterAlignment};
   transform: translateX(-7%);
 `;
 
@@ -99,9 +99,9 @@ const Header = styled.div`
   background-color: ${(props) => props.theme.deepBgColor};
 `;
 
-const PageHolder = styled.div`
-  ${(props) => props.theme.PageHolder};
-  ${(props) => props.theme.CenterAlignment};
+const Page = styled.div`
+  ${(props) => props.theme.Page};
+  ${(props) => props.theme.ColumnCenterAlignment};
   height: 90%;
   display: flex;
   flex-direction: row;
