@@ -6,26 +6,29 @@ import Todo from "components/Todo";
 
 const tmpTodo = [
   {
+    id: "1",
     title: "dailyCode",
-    isDone: "false",
+    isDone: "true",
     closingDate: "20200109",
-    clostingTime: "2200",
+    closingTime: "2200",
     priority: "3",
     repetitionType: "1",
   },
   {
+    id: "2",
     title: "weeklyCode",
     isDone: "false",
     closingDate: "20200109",
-    clostingTime: "2200",
+    closingTime: "2200",
     priority: "3",
     repetitionType: "2",
   },
   {
+    id: "3",
     title: "secondCode",
     isDone: "false",
     closingDate: "20200109",
-    clostingTime: "2200",
+    closingTime: "2200",
     priority: "3",
     repetitionType: "3",
     specialRepetition: {
@@ -34,10 +37,11 @@ const tmpTodo = [
     },
   },
   {
+    id: "4",
     title: "weekendCode",
     isDone: "false",
     closingDate: "20200109",
-    clostingTime: "2200",
+    closingTime: "2200",
     priority: "3",
     repetitionType: "3",
     specialRepetition: {
@@ -56,7 +60,6 @@ const TodoFactory = ({ todoList = tmpTodo }) => {
       {todoList.map((todo, idx) => (
         <Todo key={idx} todo={todo} />
       ))}
-      <Todo done={false} />
       <ToolBar>
         <IoMdAddCircleOutline
           size={22}

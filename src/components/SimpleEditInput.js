@@ -1,14 +1,24 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import onClickOutside from "react-onclickoutside";
 
-function SimpleEditInput({ setEditMode, type }) {
+function SimpleEditInput({ setEditMode, type, value }) {
   SimpleEditInput.handleClickOutside = () => setEditMode(false);
-  const editInput = useRef();
+  const editInputRef = useRef();
   useEffect(() => {
-    editInput.current.focus();
+    editInputRef.current.focus();
   }, []);
-  return <EditInput ref={editInput} type={type} />;
+
+  const [editInput, setEditInput] = useState(value);
+
+  return (
+    <EditInput
+      ref={editInputRef}
+      type={type}
+      value={editInput}
+      onChange={(evt) => setEditInput(evt.target.value)}
+    />
+  );
 }
 
 const EditInput = styled.input`

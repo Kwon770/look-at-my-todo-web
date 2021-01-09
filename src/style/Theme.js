@@ -32,6 +32,7 @@ const ui = {
   border-radius: 3%;`,
   TodoInput: `
   border: 0px;
+  color: ${pallete.panelFontColor};
   font-size: 18px;
 
   &:focus {

@@ -1,27 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
 import TodoSimpleEditContent from "components/TodoSimpleEditContent";
 
-const Todo = ({
-  todo,
-  //
-  done = false,
-}) => {
+const Todo = ({ todo }) => {
   const [simpleEditMode, setSimepleEditMode] = useState(false);
+  //   useEffect(() => console.log(todo), []);
 
   return (
     <Container>
       <LeftWrapper>
-        <Icon done={done}>{done === true ? <FilledCircle /> : ""}</Icon>
+        <Icon done={todo.isDone}>
+          {todo.isDone === "true" ? <FilledCircle /> : ""}
+        </Icon>
         <ContentWrapper>
           {simpleEditMode ? (
-            <TodoSimpleEditContent setSimepleEditMode={setSimepleEditMode} />
+            <TodoSimpleEditContent
+              todo={todo}
+              setSimepleEditMode={setSimepleEditMode}
+            />
           ) : (
             <div onClick={() => setSimepleEditMode(true)}>
-              <Title done={done}>123123</Title>
-              <TimeData>17:00</TimeData>
+              <Title done={todo.isDone}>{todo.title}</Title>
+              <TimeData>
+                {todo.closingDate}/{todo.closingTime}
+              </TimeData>
             </div>
           )}
         </ContentWrapper>
@@ -45,10 +49,10 @@ const TimeData = styled.h3`
 
 const Title = styled.h3`
   text-decoration-line: ${(props) =>
-    props.done === true ? "line-through" : ""};
+    props.done === "true" ? "line-through" : ""};
   text-decoration-thickness: 1.5px;
   color: ${(props) =>
-    props.done === true
+    props.done === "true"
       ? props.theme.panelBg3Color
       : props.theme.panelFontColor};
 `;

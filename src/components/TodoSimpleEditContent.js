@@ -8,13 +8,14 @@ import {
 import onClickOutside from "react-onclickoutside";
 import SimpleEditInput from "components/SimpleEditInput";
 
-function TodoSimpleEditContent({ todo, setSimepleEditMode, done = false }) {
+function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
   TodoSimpleEditContent.handleClickOutside = () => setSimepleEditMode(false);
-  const titleInput = useRef();
+  const titleInputRef = useRef();
   useEffect(() => {
-    titleInput.current.focus();
+    titleInputRef.current.focus();
   }, []);
 
+  const [titleInput, setTitleInput] = useState(todo.title);
   const [dateEdit, setDateEdit] = useState(false);
   const [timeEdit, setTimeEdit] = useState(false);
   const [priorityEdit, setPriorityEdit] = useState(false);
@@ -30,30 +31,52 @@ function TodoSimpleEditContent({ todo, setSimepleEditMode, done = false }) {
 
   return (
     <div>
-      <TitleInput ref={titleInput} />
+      <TitleInput
+        ref={titleInputRef}
+        value={titleInput}
+        onChange={(evt) => setTitleInput(evt.target.value)}
+      />
       <SimpleEditBoxWrapper>
         <SimpleEditBox>
           <AiOutlineCalendar style={{ marginRight: 4 }} />
           {dateEdit === true ? (
-            <SimpleEditInput setEditMode={setDateEdit} type="text" />
+            <SimpleEditInput
+              setEditMode={setDateEdit}
+              type="text"
+              value={todo.closingDate}
+            />
           ) : (
-            <div onClick={() => entryEdit(0)}>날짜 추가</div>
+            <div onClick={() => entryEdit(0)}>
+              {todo.closingDate ? todo.closingDate : "날짜 추가"}
+            </div>
           )}
         </SimpleEditBox>
         <SimpleEditBox>
           <AiOutlineClockCircle style={{ marginRight: 4 }} />
           {timeEdit === true ? (
-            <SimpleEditInput setEditMode={setTimeEdit} type="text" />
+            <SimpleEditInput
+              setEditMode={setTimeEdit}
+              type="text"
+              value={todo.closingTime}
+            />
           ) : (
-            <div onClick={() => entryEdit(1)}>시간 추가</div>
+            <div onClick={() => entryEdit(1)}>
+              {todo.closingTime ? todo.closingTime : "시간 추가"}
+            </div>
           )}
         </SimpleEditBox>
         <SimpleEditBox>
           <AiOutlineFlag style={{ marginRight: 4 }} />
           {priorityEdit === true ? (
-            <SimpleEditInput setEditMode={setPriorityEdit} type="number" />
+            <SimpleEditInput
+              setEditMode={setPriorityEdit}
+              type="number"
+              value={todo.priority}
+            />
           ) : (
-            <div onClick={() => entryEdit(2)}>우선순위 추가</div>
+            <div onClick={() => entryEdit(2)}>
+              {todo.priority ? todo.priority : "우선순위 추가"}
+            </div>
           )}
         </SimpleEditBox>
       </SimpleEditBoxWrapper>
