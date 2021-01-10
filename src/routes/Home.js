@@ -37,7 +37,7 @@ const Home = () => {
 
 const FigureSymbol = styled.h2`
   margin: 0px 10px;
-  font-size: 120px;
+  font-size: 13.5vw;
   font-weight: 800;
 `;
 const Figure = styled(FigureSymbol)`
@@ -52,7 +52,7 @@ const ProgressWrapper = styled.div`
 
 const Month = styled.h1`
   text-align: center;
-  /* margin-top: 5px; */
+  font-size: 1.9vw;
 `;
 
 const AlignWrapper = styled.div`
@@ -61,12 +61,12 @@ const AlignWrapper = styled.div`
 `;
 
 const Date = styled.h1`
-  font-size: 45px;
+  font-size: 5.3vw;
   font-weight: 200;
 `;
 
 const DayOfWeek = styled.h1`
-  font-size: 45px;
+  font-size: 5.3vw;
   font-weight: 800;
   margin-right: 10px;
 `;
@@ -83,7 +83,7 @@ const DateWrapper = styled.div`
 // Information
 
 const Information = styled.div`
-  width: 30%;
+  width: 32%;
   height: 85%;
   ${(props) => props.theme.ColumnCenterAlignment};
   transform: translateX(-7%);

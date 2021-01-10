@@ -55,6 +55,7 @@ const Title = styled.h3`
     props.done === "true"
       ? props.theme.panelBg3Color
       : props.theme.panelFontColor};
+  font-size: 18px;
 `;
 
 const ContentWrapper = styled.div`

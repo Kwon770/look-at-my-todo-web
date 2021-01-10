@@ -81,8 +81,9 @@ const ToolBar = styled.div`
 
 const Panel = styled.div`
   ${(props) => props.theme.RoundBox};
-  width: 50%;
-  height: 85%;
+  width: 50vw;
+  max-width: 480px;
+  height: 76.5vh;
   background-color: white;
   overflow: scroll;
 `;
