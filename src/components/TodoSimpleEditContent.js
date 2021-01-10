@@ -16,18 +16,7 @@ function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
   }, []);
 
   const [titleInput, setTitleInput] = useState(todo.title);
-  const [dateEdit, setDateEdit] = useState(false);
-  const [timeEdit, setTimeEdit] = useState(false);
-  const [priorityEdit, setPriorityEdit] = useState(false);
-  const entryEdit = (idx) => {
-    setDateEdit(false);
-    setTimeEdit(false);
-    setPriorityEdit(false);
-
-    if (idx === 0) setDateEdit(true);
-    else if (idx === 1) setTimeEdit(true);
-    else setPriorityEdit(true);
-  };
+  const [editMode, setEditMode] = useState(-1);
 
   return (
     <div>
@@ -39,42 +28,42 @@ function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
       <SimpleEditBoxWrapper>
         <SimpleEditBox>
           <AiOutlineCalendar style={{ marginRight: 4 }} />
-          {dateEdit ? (
+          {editMode === 0 ? (
             <SimpleEditInput
-              setEditMode={setDateEdit}
+              setEditMode={setEditMode}
               type="text"
               value={todo.closingDate}
             />
           ) : (
-            <div onClick={() => entryEdit(0)}>
+            <div onClick={() => setEditMode(0)}>
               {todo.closingDate ? todo.closingDate : "날짜 추가"}
             </div>
           )}
         </SimpleEditBox>
         <SimpleEditBox>
           <AiOutlineClockCircle style={{ marginRight: 4 }} />
-          {timeEdit ? (
+          {editMode === 1 ? (
             <SimpleEditInput
-              setEditMode={setTimeEdit}
+              setEditMode={setEditMode}
               type="text"
               value={todo.closingTime}
             />
           ) : (
-            <div onClick={() => entryEdit(1)}>
+            <div onClick={() => setEditMode(1)}>
               {todo.closingTime ? todo.closingTime : "시간 추가"}
             </div>
           )}
         </SimpleEditBox>
         <SimpleEditBox>
           <AiOutlineFlag style={{ marginRight: 4 }} />
-          {priorityEdit ? (
+          {editMode === 2 ? (
             <SimpleEditInput
-              setEditMode={setPriorityEdit}
+              setEditMode={setEditMode}
               type="number"
               value={todo.priority}
             />
           ) : (
-            <div onClick={() => entryEdit(2)}>
+            <div onClick={() => setEditMode(2)}>
               {todo.priority ? todo.priority : "우선순위 추가"}
             </div>
           )}

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import onClickOutside from "react-onclickoutside";
 
 function SimpleEditInput({ setEditMode, type, value }) {
-  SimpleEditInput.handleClickOutside = () => setEditMode(false);
+  SimpleEditInput.handleClickOutside = () => setEditMode(-1);
   const editInputRef = useRef();
   useEffect(() => {
     editInputRef.current.focus();
