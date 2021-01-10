@@ -4,57 +4,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
 import Todo from "components/Todo";
 
-const tmpTodo = [
-  {
-    id: "1",
-    title: "dailyCode",
-    isDone: "true",
-    closingDate: "20200109",
-    closingTime: "2200",
-    priority: "3",
-    repetitionType: "1",
-  },
-  {
-    id: "2",
-    title: "weeklyCode",
-    isDone: "false",
-    closingDate: "20200109",
-    closingTime: "2200",
-    priority: "3",
-    repetitionType: "2",
-  },
-  {
-    id: "3",
-    title: "secondCode",
-    isDone: "false",
-    closingDate: "20200109",
-    closingTime: "2200",
-    priority: "3",
-    repetitionType: "3",
-    specialRepetition: {
-      periodType: "1",
-      repetitionTerm: "2",
-    },
-  },
-  {
-    id: "4",
-    title: "weekendCode",
-    isDone: "false",
-    closingDate: "20200109",
-    closingTime: "2200",
-    priority: "3",
-    repetitionType: "3",
-    specialRepetition: {
-      periodType: "2",
-      repetitionTerm: "1",
-      detailTerm: ["0", "6"],
-    },
-  },
-];
-
-const TodoFactory = ({ todoList = tmpTodo }) => {
-  // const [detailEditMode, setDetailEditMode] = useState(false);
-
+const TodoFactory = ({ todoList }) => {
   return (
     <Panel>
       <TopToolBar>오늘</TopToolBar>

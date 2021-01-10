@@ -6,7 +6,6 @@ import TodoSimpleEditContent from "components/TodoSimpleEditContent";
 
 const Todo = ({ todo }) => {
   const [simpleEditMode, setSimepleEditMode] = useState(false);
-  //   useEffect(() => console.log(todo), []);
 
   return (
     <Container>

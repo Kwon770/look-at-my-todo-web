@@ -1,97 +1,83 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TodoFactory from "components/TodoFactory";
+import TodoCounter from "components/TodoCounter";
+import TodoMenu from "components/TodoMenu";
 
 // add visual chart
 // https://www.npmjs.com/package/easy-pie-chart-typescript
 // https://www.npmjs.com/package/rumble-charts
 
+const tmpTodo = [
+  {
+    id: "1",
+    title: "dailyCode",
+    isDone: "true",
+    closingDate: "20200109",
+    closingTime: "2200",
+    priority: "3",
+    repetitionType: "1",
+  },
+  {
+    id: "2",
+    title: "weeklyCode",
+    isDone: "false",
+    closingDate: "20200109",
+    closingTime: "2200",
+    priority: "3",
+    repetitionType: "2",
+  },
+  {
+    id: "3",
+    title: "secondCode",
+    isDone: "false",
+    closingDate: "20200109",
+    closingTime: "2200",
+    priority: "3",
+    repetitionType: "3",
+    specialRepetition: {
+      periodType: "1",
+      repetitionTerm: "2",
+    },
+  },
+  {
+    id: "4",
+    title: "weekendCode",
+    isDone: "false",
+    closingDate: "20200109",
+    closingTime: "2200",
+    priority: "3",
+    repetitionType: "3",
+    specialRepetition: {
+      periodType: "2",
+      repetitionTerm: "1",
+      detailTerm: ["0", "6"],
+    },
+  },
+];
+
 const Home = () => {
+  const [todoList, SetTodoList] = useState(tmpTodo);
+  const [isTodoClicked, setIsTodoClicked] = useState(false);
   return (
     <>
       <Header></Header>
       <Page>
-        <TodoFactory />
-        <Information>
-          <ProgressWrapper>
-            <DateWrapper>
-              <AlignWrapper>
-                <DayOfWeek>Friday</DayOfWeek>
-                <Date>8th</Date>
-              </AlignWrapper>
-              <Month>January</Month>
-            </DateWrapper>
-            <Figure>99</Figure>
-            <FigureSymbol>/</FigureSymbol>
-            <Figure>99</Figure>
-          </ProgressWrapper>
-        </Information>
+        <TodoFactory todoList={todoList} />
+        <RightColumnWrapper>
+          {isTodoClicked ? <TodoMenu /> : <TodoCounter />}
+        </RightColumnWrapper>
       </Page>
     </>
   );
 };
 
-//
-// Information - Figure
-//
-
-const FigureSymbol = styled.h2`
-  margin: 0px 10px;
-  font-size: 13.5vw;
-  font-weight: 800;
-`;
-const Figure = styled(FigureSymbol)`
-  margin: 0px;
-`;
-const ProgressWrapper = styled.div`
-  display: flex;
-  position: relative;
-`;
-
-// Information - Date
-
-const Month = styled.h1`
-  text-align: center;
-  font-size: 1.9vw;
-`;
-
-const AlignWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Date = styled.h1`
-  font-size: 5.3vw;
-  font-weight: 200;
-`;
-
-const DayOfWeek = styled.h1`
-  font-size: 5.3vw;
-  font-weight: 800;
-  margin-right: 10px;
-`;
-
-const DateWrapper = styled.div`
-  align-items: center;
-  position: absolute;
-  top: -50%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: ${(props) => props.theme.hlColor}; ;
-`;
-
-// Information
-
-const Information = styled.div`
+const RightColumnWrapper = styled.div`
   width: 32%;
   height: 85%;
   ${(props) => props.theme.ColumnCenterAlignment};
   transform: translateX(-7%);
 `;
-
-//
-//
-//
 
 const Header = styled.div`
   width: 100%;

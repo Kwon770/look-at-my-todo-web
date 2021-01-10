@@ -39,7 +39,7 @@ function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
       <SimpleEditBoxWrapper>
         <SimpleEditBox>
           <AiOutlineCalendar style={{ marginRight: 4 }} />
-          {dateEdit === true ? (
+          {dateEdit ? (
             <SimpleEditInput
               setEditMode={setDateEdit}
               type="text"
@@ -53,7 +53,7 @@ function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
         </SimpleEditBox>
         <SimpleEditBox>
           <AiOutlineClockCircle style={{ marginRight: 4 }} />
-          {timeEdit === true ? (
+          {timeEdit ? (
             <SimpleEditInput
               setEditMode={setTimeEdit}
               type="text"
@@ -67,7 +67,7 @@ function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
         </SimpleEditBox>
         <SimpleEditBox>
           <AiOutlineFlag style={{ marginRight: 4 }} />
-          {priorityEdit === true ? (
+          {priorityEdit ? (
             <SimpleEditInput
               setEditMode={setPriorityEdit}
               type="number"
