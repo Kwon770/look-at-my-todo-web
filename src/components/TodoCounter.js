@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const TodoCounter = () => {
+const TodoCounter = ({ todoCount, doneTodoCount }) => {
   return (
     <ProgressWrapper>
       <DateWrapper>
@@ -11,9 +11,9 @@ const TodoCounter = () => {
         </AlignWrapper>
         <Month>January</Month>
       </DateWrapper>
-      <Figure>99</Figure>
+      <Figure>{doneTodoCount}</Figure>
       <FigureSymbol>/</FigureSymbol>
-      <Figure>99</Figure>
+      <Figure>{todoCount}</Figure>
     </ProgressWrapper>
   );
 };

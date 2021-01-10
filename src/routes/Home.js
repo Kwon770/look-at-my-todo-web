@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TodoFactory from "components/TodoFactory";
 import TodoCounter from "components/TodoCounter";
@@ -59,13 +59,33 @@ const tmpTodo = [
 const Home = () => {
   const [todoList, SetTodoList] = useState(tmpTodo);
   const [isTodoClicked, setIsTodoClicked] = useState(false);
+  const [todoCount, setTodoCount] = useState(0);
+  const [doneTodoCount, setDoneTodoCount] = useState(0);
+
+  useEffect(() => {
+    onIsDoneChanged();
+  }, []);
+
+  const onIsDoneChanged = () => {
+    setTodoCount(todoList.length);
+
+    let doneTodoCount = 0;
+    todoList.map((todo) => {
+      if (todo.isDone === "true") doneTodoCount++;
+    });
+    setDoneTodoCount(doneTodoCount);
+  };
   return (
     <>
       <Header></Header>
       <Page>
-        <TodoFactory todoList={todoList} />
+        <TodoFactory todoList={todoList} onIsDoneChanged={onIsDoneChanged} />
         <RightColumnWrapper>
-          {isTodoClicked ? <TodoMenu /> : <TodoCounter />}
+          {isTodoClicked ? (
+            <TodoMenu />
+          ) : (
+            <TodoCounter todoCount={todoCount} doneTodoCount={doneTodoCount} />
+          )}
         </RightColumnWrapper>
       </Page>
     </>
