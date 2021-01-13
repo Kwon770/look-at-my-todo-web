@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
 import Todo from "components/Todo";
+import TodoMenu from "components/TodoMenu";
 
-const TodoFactory = ({ todoList }) => {
+const TodoFactory = ({
+  todoList,
+  onIsDoneChanged,
+  clickedTodo,
+  setClickedTodo,
+  isTodoClicked,
+  setIsTodoClicked,
+}) => {
   return (
     <Panel>
       <TopToolBar>오늘</TopToolBar>
       {todoList.map((todo, idx) => (
-        <Todo key={idx} todo={todo} />
+        <Todo
+          key={idx}
+          todo={todo}
+          setClickedTodo={setClickedTodo}
+          setIsTodoClicked={setIsTodoClicked}
+        />
       ))}
       <BottomToolBar>
         <IoMdAddCircleOutline
@@ -18,6 +31,7 @@ const TodoFactory = ({ todoList }) => {
           opacity={0.5}
         />
       </BottomToolBar>
+      {isTodoClicked ? <TodoMenu clickedTodo={clickedTodo} /> : ""}
     </Panel>
   );
 };
@@ -41,9 +55,9 @@ const BottomToolBar = styled.div`
 `;
 
 const Panel = styled.div`
-  ${(props) => props.theme.RoundBox};
+  ${(props) => props.theme.RoundBoxRadius}
   width: 50vw;
-  max-width: 480px;
+  /* max-width: 480px; */
   height: 76.5vh;
   background-color: white;
   overflow: scroll;

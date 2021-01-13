@@ -4,8 +4,13 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
 import TodoSimpleEditContent from "components/TodoSimpleEditContent";
 
-const Todo = ({ todo }) => {
+const Todo = ({ todo, setClickedTodo, setIsTodoClicked }) => {
   const [simpleEditMode, setSimepleEditMode] = useState(false);
+
+  const onClickInfoButton = () => {
+    setClickedTodo(todo);
+    setIsTodoClicked(true);
+  };
 
   return (
     <Container>
@@ -34,6 +39,7 @@ const Todo = ({ todo }) => {
         size={22}
         color={Theme.hl2Color}
         display="none"
+        onClick={onClickInfoButton}
       />
     </Container>
   );

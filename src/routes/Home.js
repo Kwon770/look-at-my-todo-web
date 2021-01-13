@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TodoFactory from "components/TodoFactory";
 import TodoCounter from "components/TodoCounter";
-import TodoMenu from "components/TodoMenu";
 
 // add visual chart
 // https://www.npmjs.com/package/easy-pie-chart-typescript
@@ -59,6 +58,7 @@ const tmpTodo = [
 const Home = () => {
   const [todoList, SetTodoList] = useState(tmpTodo);
   const [isTodoClicked, setIsTodoClicked] = useState(false);
+  const [clickedTodo, setClickedTodo] = useState();
   const [todoCount, setTodoCount] = useState(0);
   const [doneTodoCount, setDoneTodoCount] = useState(0);
 
@@ -79,13 +79,18 @@ const Home = () => {
     <>
       <Header></Header>
       <Page>
-        <TodoFactory todoList={todoList} onIsDoneChanged={onIsDoneChanged} />
+        <div style={{ position: "relative" }}>
+          <TodoFactory
+            todoList={todoList}
+            onIsDoneChanged={onIsDoneChanged}
+            clickedTodo={clickedTodo}
+            setClickedTodo={setClickedTodo}
+            isTodoClicked={isTodoClicked}
+            setIsTodoClicked={setIsTodoClicked}
+          />
+        </div>
         <RightColumnWrapper>
-          {isTodoClicked ? (
-            <TodoMenu />
-          ) : (
-            <TodoCounter todoCount={todoCount} doneTodoCount={doneTodoCount} />
-          )}
+          <TodoCounter todoCount={todoCount} doneTodoCount={doneTodoCount} />
         </RightColumnWrapper>
       </Page>
     </>
@@ -109,10 +114,8 @@ const Page = styled.div`
   ${(props) => props.theme.Page};
   ${(props) => props.theme.ColumnCenterAlignment};
   height: 90%;
-  display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
 export default Home;

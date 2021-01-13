@@ -28,8 +28,9 @@ const ui = {
   justify-content: center;
   align-items: center;
   `,
-  RoundBox: `
-  border-radius: 3%;`,
+  RoundBoxRadius: `
+  border-radius: 20px;
+  `,
   TodoInput: `
   border: 0px;
   color: ${pallete.panelFontColor};
