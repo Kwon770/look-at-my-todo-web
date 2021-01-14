@@ -7,7 +7,7 @@ const Router = ({ isLogin }) => (
   <HashRouter>
     <Switch>
       <Route exact path="/">
-        <Home />
+        <Home isLogin={isLogin} />
       </Route>
       <Route exact path="/rank">
         <Rank />

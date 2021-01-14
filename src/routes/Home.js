@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TodoFactory from "components/TodoFactory";
 import TodoCounter from "components/TodoCounter";
+import { FcGoogle, FcExport } from "react-icons/fc";
 
 // add visual chart
 // https://www.npmjs.com/package/easy-pie-chart-typescript
@@ -55,7 +56,7 @@ const tmpTodo = [
   },
 ];
 
-const Home = () => {
+const Home = ({ isLogin }) => {
   const [todoList, SetTodoList] = useState(tmpTodo);
   const [todoCount, setTodoCount] = useState(0);
   const [completedTodoCount, setCompletedTodoCount] = useState(0);
@@ -85,7 +86,19 @@ const Home = () => {
 
   return (
     <>
-      <Header></Header>
+      <Header>
+        <h1>{isLogin ? "Hello, USER!" : ""}</h1>
+        <HeaderRightWrapper>
+          <h1 style={{ marginRight: 10, cursor: "default" }}>
+            {isLogin ? "Log out from" : "Log in from"}
+          </h1>
+          {isLogin ? (
+            <FcExport size={28} style={{ cursor: "pointer" }} />
+          ) : (
+            <FcGoogle size={28} style={{ cursor: "pointer" }} />
+          )}
+        </HeaderRightWrapper>
+      </Header>
       <Page>
         <div style={{ position: "relative" }}>
           <TodoFactory
@@ -112,10 +125,18 @@ const RightColumnWrapper = styled.div`
   transform: translateX(-7%);
 `;
 
+const HeaderRightWrapper = styled.div`
+  ${(props) => props.theme.RowCenterAlignment};
+`;
+
 const Header = styled.div`
+  ${(props) => props.theme.RowCenterAlignment};
+  justify-content: space-between;
+  padding: 0px 20px;
   width: 100%;
   height: 50px;
   background-color: ${(props) => props.theme.deepBgColor};
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
 const Page = styled.div`
