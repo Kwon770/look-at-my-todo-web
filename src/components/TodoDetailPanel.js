@@ -1,50 +1,84 @@
 import React, { useEffect, useState } from "react";
+import useInput from "hooks/useInput";
+import useCheckbox from "hooks/useCheckbox";
 import styled from "styled-components";
 
 const TodoDetailPanel = ({ clickedTodo }) => {
-  const [title, setTitle] = useState("");
-  const [existClosingDate, setExistClosingDate] = useState(false);
-  const [closingDate, setClosingDate] = useState("");
-  const [existClosingTime, setExistClosingTime] = useState(false);
-  const [closingTime, setClosingTime] = useState("");
-  const [repetitionType, setRepetitionType] = useState("");
-  const [priority, setPriority] = useState("");
+  const title = useInput(clickedTodo.title);
+  const existClosingDate = useCheckbox(clickedTodo.closingDate ? true : false);
+  const closingDate = useInput(clickedTodo.closingDate);
+  const existClosingTime = useCheckbox(clickedTodo.closingTime ? true : false);
+  const closingTime = useInput(clickedTodo.closingTime);
+  const priority = useInput(clickedTodo.priority);
+
+  // const [title, setTitle] = useState("");
+  // const [existClosingDate, setExistClosingDate] = useState(false);
+  // const [closingDate, setClosingDate] = useState("");
+  // const [existClosingTime, setExistClosingTime] = useState(false);
+  // const [closingTime, setClosingTime] = useState("");
+  // const [repetitionType, setRepetitionType] = useState("");
+  // const [priority, setPriority] = useState("");
 
   useEffect(() => {
-    setTitle(clickedTodo.title);
-    if (clickedTodo.closingDate) {
-      setExistClosingDate(true);
-      setClosingDate(clickedTodo.closingDate);
+    //   setTitle(clickedTodo.title);
+    //   if (clickedTodo.closingDate) {
+    //     setExistClosingDate(true);
+    //     setClosingDate(clickedTodo.closingDate);
+    //   }
+    //   if (clickedTodo.closingTime) {
+    //     setExistClosingTime(true);
+    //     setClosingTime(clickedTodo.closingTime);
+    //   }
+    //   setRepetitionType(clickedTodo.repetitionType);
+    //   setPriority(clickedTodo.priority);
+  }, [clickedTodo.id]);
+
+  const onChangeExistClosingDate = () => {
+    existClosingDate.onChange();
+
+    if (existClosingDate.checked) {
+      closingDate.onChange("");
+    } else {
+      const today = new Date();
+      let yy = today.getFullYear();
+      let mm = today.getMonth() + 1;
+      if (mm < 10) mm = `0${mm}`;
+      let dd = today.getDate();
+      if (dd < 10) dd = `0${dd}`;
+      closingDate.onChange(`${yy}-${mm}-${dd}`);
     }
-    if (clickedTodo.closingTime) {
-      setExistClosingTime(true);
-      setClosingTime(clickedTodo.closingTime);
+  };
+
+  const onChangeExistClosingTime = () => {
+    existClosingTime.onChange();
+
+    if (existClosingTime.checked) {
+      closingTime.onChange("");
+    } else {
+      const today = new Date();
+      let hh = today.getHours();
+      if (hh < 10) hh = `0${hh}`;
+      let mm = today.getMinutes();
+      if (mm < 10) mm = `0${mm}`;
+      closingTime.onChange(`${hh}:${mm}`);
     }
-    setRepetitionType(clickedTodo.repetitionType);
-    setPriority(clickedTodo.priority);
-  }, []);
+  };
 
   return (
     <Panel>
-      <TitleInput
-        value={title}
-        onChange={(evt) => setTitle(evt.target.value)}
-      />
+      <TitleInput {...title} />
       <RowWrapper>
         <Menu>
           <Text title>알리기</Text>
           <CheckBox
             type="checkbox"
-            checked={existClosingDate}
-            onChange={() => setExistClosingDate(!existClosingDate)}
+            {...existClosingDate}
+            onChange={onChangeExistClosingDate}
           />
           <div style={{ width: 100 }}>
             <Text>특정 날짜에</Text>
             {existClosingDate ? (
-              <Input
-                value={closingDate}
-                onChange={(evt) => setClosingDate(evt.target.value)}
-              />
+              <Input type="date" style={{ width: 155 }} {...closingDate} />
             ) : (
               ""
             )}
@@ -54,19 +88,12 @@ const TodoDetailPanel = ({ clickedTodo }) => {
           <Text title />
           <CheckBox
             type="checkbox"
-            checked={existClosingTime}
-            onChange={() => setExistClosingTime(!existClosingTime)}
+            {...existClosingTime}
+            onChange={onChangeExistClosingTime}
           />
           <div style={{ width: 100 }}>
             <Text>특정 시간에</Text>
-            {existClosingTime ? (
-              <Input
-                value={closingTime}
-                onChange={(evt) => setClosingTime(evt.target.value)}
-              />
-            ) : (
-              ""
-            )}
+            {existClosingTime ? <Input type="time" {...closingTime} /> : ""}
           </div>
         </Menu>
         <Menu>
@@ -81,11 +108,7 @@ const TodoDetailPanel = ({ clickedTodo }) => {
       <RowWrapper>
         <Menu>
           <Text title>우선순위</Text>
-          <Input
-            type="number"
-            value={priority}
-            onChange={(evt) => setPriority(evt.target.value)}
-          />
+          <Input type="number" {...priority} />
         </Menu>
       </RowWrapper>
     </Panel>
@@ -96,7 +119,6 @@ const Input = styled.input`
   ${(props) => props.theme.TodoInput};
   color: ${(props) => props.theme.panelFont2Color};
   font-size: 13px;
-  width: 70%;
 `;
 
 const CheckBox = styled.input`
@@ -109,7 +131,7 @@ const CheckBox = styled.input`
 `;
 
 const Text = styled.h2`
-  width: ${(props) => (props.title ? "30%" : "70%")};
+  width: ${(props) => (props.title ? "60px" : "80px")};
   color: ${(props) =>
     props.title ? props.theme.panelBg3Color : props.theme.panelFontColor};
   font-size: 14px;
@@ -143,7 +165,7 @@ const Panel = styled.div`
   height: 30vh;
   background-color: ${(props) => props.theme.panelBgColor};
   margin-bottom: 5vh;
-  padding: 20px;
+  padding: 17px 11px;
   overflow: scroll;
 `;
 

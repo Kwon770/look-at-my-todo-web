@@ -20,7 +20,9 @@ const TodoFactory = ({
         <Todo
           key={idx}
           todo={todo}
+          clickedTodo={clickedTodo}
           setClickedTodo={setClickedTodo}
+          isTodoClicked={isTodoClicked}
           setIsTodoClicked={setIsTodoClicked}
         />
       ))}
