@@ -7,6 +7,7 @@ import TodoSimpleEditContent from "components/TodoSimpleEditContent";
 const Todo = ({
   todo,
   onTodoChanged,
+  onChangeCompletion,
   clickedTodo,
   setClickedTodo,
   isTodoClicked,
@@ -23,11 +24,20 @@ const Todo = ({
     setClickedTodo(todo);
   };
 
+  const onToogleCompletion = () => {
+    const newTodo = {
+      ...todo,
+      isCompleted: String(todo.isCompleted === "false"),
+    };
+    onTodoChanged(newTodo);
+    onChangeCompletion();
+  };
+
   return (
     <Container>
       <LeftWrapper>
-        <Icon done={todo.isDone}>
-          {todo.isDone === "true" ? <FilledCircle /> : ""}
+        <Icon completed={todo.isCompleted} onClick={onToogleCompletion}>
+          {todo.isCompleted === "true" ? <FilledCircle /> : ""}
         </Icon>
         <ContentWrapper>
           {simpleEditMode ? (
@@ -38,7 +48,7 @@ const Todo = ({
             />
           ) : (
             <div onClick={() => setSimpleEditMode(true)}>
-              <Title done={todo.isDone}>{todo.title}</Title>
+              <Title completed={todo.isCompleted}>{todo.title}</Title>
               <TimeData>
                 {todo.closingDate}/{todo.closingTime}
               </TimeData>
@@ -66,10 +76,10 @@ const TimeData = styled.h3`
 
 const Title = styled.h3`
   text-decoration-line: ${(props) =>
-    props.done === "true" ? "line-through" : ""};
+    props.completed === "true" ? "line-through" : ""};
   text-decoration-thickness: 1.5px;
   color: ${(props) =>
-    props.done === "true"
+    props.completed === "true"
       ? props.theme.panelBg3Color
       : props.theme.panelFontColor};
   font-size: 18px;
@@ -95,7 +105,9 @@ const Icon = styled.div`
   border-radius: 10px;
   border: solid 1px
     ${(props) =>
-      props.done === true ? props.theme.hl2Color : props.theme.panelBg3Color};
+      props.completed === true
+        ? props.theme.hl2Color
+        : props.theme.panelBg3Color};
 `;
 
 const LeftWrapper = styled.div`

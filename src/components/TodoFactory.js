@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
 import Todo from "components/Todo";
 import TodoMenuWrapper from "components/TodoMenuWrapper";
 
-const TodoFactory = ({ todoList, onTodoChanged, onIsDoneChanged }) => {
+const TodoFactory = ({ todoList, onTodoChanged, onChangeCompletion }) => {
   const [clickedTodo, setClickedTodo] = useState();
   const [isTodoClicked, setIsTodoClicked] = useState(false);
+
+  // useEffect(() => {
+  //   console.log(todoList);
+  // }, [todoList]);
 
   return (
     <Panel>
@@ -17,6 +21,7 @@ const TodoFactory = ({ todoList, onTodoChanged, onIsDoneChanged }) => {
           key={idx}
           todo={todo}
           onTodoChanged={onTodoChanged}
+          onChangeCompletion={onChangeCompletion}
           clickedTodo={clickedTodo}
           setClickedTodo={setClickedTodo}
           isTodoClicked={isTodoClicked}
@@ -64,7 +69,6 @@ const BottomToolBar = styled.div`
 const Panel = styled.div`
   ${(props) => props.theme.RoundBoxRadius}
   width: 50vw;
-  /* max-width: 480px; */
   height: 76.5vh;
   background-color: white;
   overflow: scroll;

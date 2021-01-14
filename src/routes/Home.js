@@ -11,7 +11,7 @@ const tmpTodo = [
   {
     id: "1",
     title: "dailyCode",
-    isDone: "true",
+    isCompleted: "true",
     closingDate: "2020-12-25",
     closingTime: "22:00",
     priority: "3",
@@ -20,7 +20,7 @@ const tmpTodo = [
   {
     id: "2",
     title: "weeklyCode",
-    isDone: "false",
+    isCompleted: "false",
     closingDate: "2021-12-25",
     closingTime: "10:00",
     priority: "3",
@@ -29,7 +29,7 @@ const tmpTodo = [
   {
     id: "3",
     title: "secondCode",
-    isDone: "false",
+    isCompleted: "false",
     closingDate: "2020-12-25",
     closingTime: "22:00",
     priority: "3",
@@ -42,7 +42,7 @@ const tmpTodo = [
   {
     id: "4",
     title: "weekendCode",
-    isDone: "false",
+    isCompleted: "false",
     closingDate: "2021-12-25",
     closingTime: "10:00",
     priority: "3",
@@ -58,15 +58,11 @@ const tmpTodo = [
 const Home = () => {
   const [todoList, SetTodoList] = useState(tmpTodo);
   const [todoCount, setTodoCount] = useState(0);
-  const [doneTodoCount, setDoneTodoCount] = useState(0);
+  const [completedTodoCount, setCompletedTodoCount] = useState(0);
 
   useEffect(() => {
-    onIsDoneChanged();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(todoList);
-  // }, [todoList]);
+    onChangeCompletion();
+  }, [todoList]);
 
   const onTodoChanged = (changedTodo) => {
     const newTodoList = todoList.map((todo) => {
@@ -74,18 +70,19 @@ const Home = () => {
       else return changedTodo;
     });
     SetTodoList(newTodoList);
-    // console.log(todoList);
+    // console.log(newTodoList);
   };
 
-  const onIsDoneChanged = () => {
+  const onChangeCompletion = () => {
     setTodoCount(todoList.length);
 
-    let doneTodoCount = 0;
+    let completedTodoCount = 0;
     todoList.map((todo) => {
-      if (todo.isDone === "true") doneTodoCount++;
+      if (todo.isCompleted === "true") completedTodoCount++;
     });
-    setDoneTodoCount(doneTodoCount);
+    setCompletedTodoCount(completedTodoCount);
   };
+
   return (
     <>
       <Header></Header>
@@ -94,11 +91,14 @@ const Home = () => {
           <TodoFactory
             todoList={todoList}
             onTodoChanged={onTodoChanged}
-            onIsDoneChanged={onIsDoneChanged}
+            onChangeCompletion={onChangeCompletion}
           />
         </div>
         <RightColumnWrapper>
-          <TodoCounter todoCount={todoCount} doneTodoCount={doneTodoCount} />
+          <TodoCounter
+            todoCount={todoCount}
+            completedTodoCount={completedTodoCount}
+          />
         </RightColumnWrapper>
       </Page>
     </>
