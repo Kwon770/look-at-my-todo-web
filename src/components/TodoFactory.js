@@ -9,10 +9,6 @@ const TodoFactory = ({ todoList, onTodoChanged, onChangeCompletion }) => {
   const [clickedTodo, setClickedTodo] = useState();
   const [isTodoClicked, setIsTodoClicked] = useState(false);
 
-  // useEffect(() => {
-  //   console.log(todoList);
-  // }, [todoList]);
-
   return (
     <Panel>
       <TopToolBar>오늘</TopToolBar>
@@ -33,6 +29,7 @@ const TodoFactory = ({ todoList, onTodoChanged, onChangeCompletion }) => {
           size={22}
           color={Theme.panelFont2Color}
           opacity={0.5}
+          style={{ cursor: "pointer" }}
         />
       </BottomToolBar>
       {isTodoClicked ? (
@@ -58,6 +55,7 @@ const TopToolBar = styled.div`
   color: ${(props) => props.theme.hl2Color};
   font-size: calc(20px + 1.1vh);
   font-weight: 600;
+  cursor: default;
 `;
 
 const BottomToolBar = styled.div`
@@ -68,6 +66,7 @@ const BottomToolBar = styled.div`
 
 const Panel = styled.div`
   ${(props) => props.theme.RoundBoxRadius}
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   width: 50vw;
   height: 76.5vh;
   background-color: white;

@@ -75,6 +75,7 @@ const Input = styled.input`
   background-color: ${(props) =>
     props.title ? "" : props.theme.panelBg2Color};
   font-size: ${(props) => (props.title ? "" : "13px")};
+  cursor: ${(props) => (props.title ? "text" : "pointer")};
 `;
 
 const clickOutsideConfig = {

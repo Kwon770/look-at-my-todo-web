@@ -62,6 +62,7 @@ const Todo = ({
         color={Theme.hl2Color}
         display="none"
         onClick={onClickInfoButton}
+        style={{ cursor: "pointer" }}
       />
     </Container>
   );
@@ -108,6 +109,7 @@ const Icon = styled.div`
       props.completed === true
         ? props.theme.hl2Color
         : props.theme.panelBg3Color};
+  cursor: pointer;
 `;
 
 const LeftWrapper = styled.div`
