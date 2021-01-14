@@ -11,26 +11,23 @@ const TodoDetailPanel = ({ clickedTodo }) => {
   const closingTime = useInput(clickedTodo.closingTime);
   const priority = useInput(clickedTodo.priority);
 
-  // const [title, setTitle] = useState("");
-  // const [existClosingDate, setExistClosingDate] = useState(false);
-  // const [closingDate, setClosingDate] = useState("");
-  // const [existClosingTime, setExistClosingTime] = useState(false);
-  // const [closingTime, setClosingTime] = useState("");
-  // const [repetitionType, setRepetitionType] = useState("");
-  // const [priority, setPriority] = useState("");
-
   useEffect(() => {
-    //   setTitle(clickedTodo.title);
-    //   if (clickedTodo.closingDate) {
-    //     setExistClosingDate(true);
-    //     setClosingDate(clickedTodo.closingDate);
-    //   }
-    //   if (clickedTodo.closingTime) {
-    //     setExistClosingTime(true);
-    //     setClosingTime(clickedTodo.closingTime);
-    //   }
-    //   setRepetitionType(clickedTodo.repetitionType);
-    //   setPriority(clickedTodo.priority);
+    title.onChange(clickedTodo.title);
+    if (clickedTodo.closingDate) {
+      existClosingDate.setChecked(true);
+      closingDate.onChange(clickedTodo.closingDate);
+    } else {
+      existClosingDate.setChecked(false);
+      closingDate.onChange("");
+    }
+    if (clickedTodo.closingTime) {
+      existClosingTime.setChecked(true);
+      closingTime.onChange(clickedTodo.closingTime);
+    } else {
+      existClosingTime.setChecked(false);
+      closingTime.onChange("");
+    }
+    priority.onChange(clickedTodo.priority);
   }, [clickedTodo.id]);
 
   const onChangeExistClosingDate = () => {

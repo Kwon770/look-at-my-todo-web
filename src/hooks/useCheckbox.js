@@ -5,7 +5,7 @@ const useCheckbox = (initialValue) => {
   const onChange = () => {
     setChecked(!checked);
   };
-  return { checked, onChange };
+  return { checked, onChange, setChecked };
 };
 
 export default useCheckbox;
