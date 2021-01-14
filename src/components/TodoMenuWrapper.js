@@ -3,11 +3,15 @@ import styled from "styled-components";
 import DetailPanel from "components/TodoDetailPanel";
 import ManagementPanel from "components/TodoManagementPanel";
 
-const TodoMenu = ({ clickedTodo }) => {
+const TodoMenuWrapper = ({ setIsTodoClicked, clickedTodo, onTodoChanged }) => {
   return (
     <PanelHolder>
-      <DetailPanel clickedTodo={clickedTodo}></DetailPanel>
-      <ManagementPanel></ManagementPanel>
+      <DetailPanel
+        setIsTodoClicked={setIsTodoClicked}
+        clickedTodo={clickedTodo}
+        onTodoChanged={onTodoChanged}
+      />
+      <ManagementPanel setIsTodoClicked={setIsTodoClicked} />
     </PanelHolder>
   );
 };
@@ -23,4 +27,4 @@ const PanelHolder = styled.div`
   left: 53.6vw;
   z-index: 10;
 `;
-export default TodoMenu;
+export default TodoMenuWrapper;

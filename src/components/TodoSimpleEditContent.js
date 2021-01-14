@@ -1,72 +1,53 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import {
-  AiOutlineCalendar,
-  AiOutlineClockCircle,
-  AiOutlineFlag,
-} from "react-icons/ai";
 import onClickOutside from "react-onclickoutside";
-import SimpleEditInput from "components/SimpleEditInput";
+import useInput from "hooks/useInput";
 
-function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
-  TodoSimpleEditContent.handleClickOutside = () => setSimepleEditMode(false);
+function TodoSimpleEditContent({ todo, setSimpleEditMode, onTodoChanged }) {
+  TodoSimpleEditContent.handleClickOutside = () => setSimpleEditMode(false);
   const titleInputRef = useRef();
   useEffect(() => {
     titleInputRef.current.focus();
   }, []);
 
-  const [titleInput, setTitleInput] = useState(todo.title);
-  const [editMode, setEditMode] = useState(-1);
+  const title = useInput(todo.title);
+  const closingDate = useInput(todo.closingDate);
+  const closingTime = useInput(todo.closingTime);
+  const priority = useInput(todo.priority);
+
+  // Update Todo immediately
+  useEffect(() => updateTodo(), [
+    title.value,
+    closingDate.value,
+    closingTime.value,
+    priority.value,
+  ]);
+
+  const updateTodo = () => {
+    const newTodo = {
+      ...todo,
+      title: title.value,
+      closingDate: closingDate.value,
+      closingTime: closingTime.value,
+      priority: priority.value,
+      repetitionType: todo.repetitionType,
+      specialRepetition: todo.specialRepetition,
+    };
+    onTodoChanged(newTodo);
+  };
 
   return (
     <div>
-      <TitleInput
-        ref={titleInputRef}
-        value={titleInput}
-        onChange={(evt) => setTitleInput(evt.target.value)}
-      />
+      <Input title ref={titleInputRef} {...title} />
       <SimpleEditBoxWrapper>
         <SimpleEditBox>
-          <AiOutlineCalendar style={{ marginRight: 4 }} />
-          {editMode === 0 ? (
-            <SimpleEditInput
-              setEditMode={setEditMode}
-              type="text"
-              value={todo.closingDate}
-            />
-          ) : (
-            <div onClick={() => setEditMode(0)}>
-              {todo.closingDate ? todo.closingDate : "날짜 추가"}
-            </div>
-          )}
+          <Input type="date" {...closingDate} />
         </SimpleEditBox>
         <SimpleEditBox>
-          <AiOutlineClockCircle style={{ marginRight: 4 }} />
-          {editMode === 1 ? (
-            <SimpleEditInput
-              setEditMode={setEditMode}
-              type="text"
-              value={todo.closingTime}
-            />
-          ) : (
-            <div onClick={() => setEditMode(1)}>
-              {todo.closingTime ? todo.closingTime : "시간 추가"}
-            </div>
-          )}
+          <Input type="time" {...closingTime} />
         </SimpleEditBox>
         <SimpleEditBox>
-          <AiOutlineFlag style={{ marginRight: 4 }} />
-          {editMode === 2 ? (
-            <SimpleEditInput
-              setEditMode={setEditMode}
-              type="number"
-              value={todo.priority}
-            />
-          ) : (
-            <div onClick={() => setEditMode(2)}>
-              {todo.priority ? todo.priority : "우선순위 추가"}
-            </div>
-          )}
+          <Input type="number" style={{ width: 35 }} {...priority} />
         </SimpleEditBox>
       </SimpleEditBoxWrapper>
     </div>
@@ -75,7 +56,6 @@ function TodoSimpleEditContent({ todo, setSimepleEditMode }) {
 
 const SimpleEditBox = styled.div`
   ${(props) => props.theme.RowCenterAlignment}
-  /* margin-left: 50px; */
   border-radius: 4px;
   padding: 4px 7px;
   background-color: ${(props) => props.theme.panelBg2Color};
@@ -89,8 +69,12 @@ const SimpleEditBoxWrapper = styled.div`
   ${(props) => props.theme.RowCenterAlignment}
 `;
 
-const TitleInput = styled.input`
-  ${(props) => props.theme.TodoInput}
+const Input = styled.input`
+  ${(props) => props.theme.TodoInput};
+  color: ${(props) => (props.title ? "" : props.theme.panelFont2Color)};
+  background-color: ${(props) =>
+    props.title ? "" : props.theme.panelBg2Color};
+  font-size: ${(props) => (props.title ? "" : "13px")};
 `;
 
 const clickOutsideConfig = {

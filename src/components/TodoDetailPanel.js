@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import onClickOutside from "react-onclickoutside";
 import useInput from "hooks/useInput";
 import useCheckbox from "hooks/useCheckbox";
 import styled from "styled-components";
 
-const TodoDetailPanel = ({ clickedTodo }) => {
+function TodoDetailPanel({ setIsTodoClicked, clickedTodo, onTodoChanged }) {
+  TodoDetailPanel.handleClickOutside = () => setIsTodoClicked(false);
+  const titleInputRef = useRef();
+  useEffect(() => {
+    titleInputRef.current.focus();
+  }, []);
+
   const title = useInput(clickedTodo.title);
   const existClosingDate = useCheckbox(clickedTodo.closingDate ? true : false);
   const closingDate = useInput(clickedTodo.closingDate);
@@ -11,6 +18,30 @@ const TodoDetailPanel = ({ clickedTodo }) => {
   const closingTime = useInput(clickedTodo.closingTime);
   const priority = useInput(clickedTodo.priority);
 
+  // Update Todo immediately
+  useEffect(() => updateTodo(), [
+    title.value,
+    existClosingDate.checked,
+    closingDate.value,
+    existClosingTime.checked,
+    closingTime.value,
+    priority.value,
+  ]);
+
+  const updateTodo = () => {
+    const newTodo = {
+      ...clickedTodo,
+      title: title.value,
+      closingDate: closingDate.value,
+      closingTime: closingTime.value,
+      priority: priority.value,
+      repetitionType: clickedTodo.repetitionType,
+      specialRepetition: clickedTodo.specialRepetition,
+    };
+    onTodoChanged(newTodo);
+  };
+
+  // Change panel information according to click event
   useEffect(() => {
     title.onChange(clickedTodo.title);
     if (clickedTodo.closingDate) {
@@ -63,7 +94,7 @@ const TodoDetailPanel = ({ clickedTodo }) => {
 
   return (
     <Panel>
-      <TitleInput {...title} />
+      <TitleInput ref={titleInputRef} {...title} />
       <RowWrapper>
         <Menu>
           <Text title>알리기</Text>
@@ -110,7 +141,7 @@ const TodoDetailPanel = ({ clickedTodo }) => {
       </RowWrapper>
     </Panel>
   );
-};
+}
 
 const Input = styled.input`
   ${(props) => props.theme.TodoInput};
@@ -166,4 +197,7 @@ const Panel = styled.div`
   overflow: scroll;
 `;
 
-export default TodoDetailPanel;
+const clickOutsideConfig = {
+  handleClickOutside: () => TodoDetailPanel.handleClickOutside,
+};
+export default onClickOutside(TodoDetailPanel, clickOutsideConfig);

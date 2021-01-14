@@ -57,14 +57,25 @@ const tmpTodo = [
 
 const Home = () => {
   const [todoList, SetTodoList] = useState(tmpTodo);
-  const [isTodoClicked, setIsTodoClicked] = useState(false);
-  const [clickedTodo, setClickedTodo] = useState();
   const [todoCount, setTodoCount] = useState(0);
   const [doneTodoCount, setDoneTodoCount] = useState(0);
 
   useEffect(() => {
     onIsDoneChanged();
   }, []);
+
+  // useEffect(() => {
+  //   console.log(todoList);
+  // }, [todoList]);
+
+  const onTodoChanged = (changedTodo) => {
+    const newTodoList = todoList.map((todo) => {
+      if (todo.id !== changedTodo.id) return todo;
+      else return changedTodo;
+    });
+    SetTodoList(newTodoList);
+    // console.log(todoList);
+  };
 
   const onIsDoneChanged = () => {
     setTodoCount(todoList.length);
@@ -82,11 +93,8 @@ const Home = () => {
         <div style={{ position: "relative" }}>
           <TodoFactory
             todoList={todoList}
+            onTodoChanged={onTodoChanged}
             onIsDoneChanged={onIsDoneChanged}
-            clickedTodo={clickedTodo}
-            setClickedTodo={setClickedTodo}
-            isTodoClicked={isTodoClicked}
-            setIsTodoClicked={setIsTodoClicked}
           />
         </div>
         <RightColumnWrapper>

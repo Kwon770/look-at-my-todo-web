@@ -6,20 +6,21 @@ import TodoSimpleEditContent from "components/TodoSimpleEditContent";
 
 const Todo = ({
   todo,
+  onTodoChanged,
   clickedTodo,
   setClickedTodo,
   isTodoClicked,
   setIsTodoClicked,
 }) => {
-  const [simpleEditMode, setSimepleEditMode] = useState(false);
+  const [simpleEditMode, setSimpleEditMode] = useState(false);
 
   const onClickInfoButton = () => {
     if (clickedTodo && todo.id === clickedTodo.id) {
       setIsTodoClicked(!isTodoClicked);
     } else {
-      setClickedTodo(todo);
       setIsTodoClicked(true);
     }
+    setClickedTodo(todo);
   };
 
   return (
@@ -32,10 +33,11 @@ const Todo = ({
           {simpleEditMode ? (
             <TodoSimpleEditContent
               todo={todo}
-              setSimepleEditMode={setSimepleEditMode}
+              setSimpleEditMode={setSimpleEditMode}
+              onTodoChanged={onTodoChanged}
             />
           ) : (
-            <div onClick={() => setSimepleEditMode(true)}>
+            <div onClick={() => setSimpleEditMode(true)}>
               <Title done={todo.isDone}>{todo.title}</Title>
               <TimeData>
                 {todo.closingDate}/{todo.closingTime}
@@ -45,7 +47,7 @@ const Todo = ({
         </ContentWrapper>
       </LeftWrapper>
       <IoMdInformationCircleOutline
-        className="infoButton"
+        className="infoButton ignore-react-onclickoutside"
         size={22}
         color={Theme.hl2Color}
         display="none"

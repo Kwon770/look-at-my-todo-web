@@ -1,18 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
 import Todo from "components/Todo";
-import TodoMenu from "components/TodoMenu";
+import TodoMenuWrapper from "components/TodoMenuWrapper";
 
-const TodoFactory = ({
-  todoList,
-  onIsDoneChanged,
-  clickedTodo,
-  setClickedTodo,
-  isTodoClicked,
-  setIsTodoClicked,
-}) => {
+const TodoFactory = ({ todoList, onTodoChanged, onIsDoneChanged }) => {
+  const [clickedTodo, setClickedTodo] = useState();
+  const [isTodoClicked, setIsTodoClicked] = useState(false);
+
   return (
     <Panel>
       <TopToolBar>오늘</TopToolBar>
@@ -20,6 +16,7 @@ const TodoFactory = ({
         <Todo
           key={idx}
           todo={todo}
+          onTodoChanged={onTodoChanged}
           clickedTodo={clickedTodo}
           setClickedTodo={setClickedTodo}
           isTodoClicked={isTodoClicked}
@@ -33,7 +30,15 @@ const TodoFactory = ({
           opacity={0.5}
         />
       </BottomToolBar>
-      {isTodoClicked ? <TodoMenu clickedTodo={clickedTodo} /> : ""}
+      {isTodoClicked ? (
+        <TodoMenuWrapper
+          setIsTodoClicked={setIsTodoClicked}
+          clickedTodo={clickedTodo}
+          onTodoChanged={onTodoChanged}
+        />
+      ) : (
+        ""
+      )}
     </Panel>
   );
 };
