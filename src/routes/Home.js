@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { FcGoogle, FcExport } from "react-icons/fc";
+import { v4 as uuidv4 } from "uuid";
 import TodoFactory from "components/TodoFactory";
 import TodoCounter from "components/TodoCounter";
-import { FcGoogle, FcExport } from "react-icons/fc";
+import GetDate from "GetDate";
 
 // add visual chart
 // https://www.npmjs.com/package/easy-pie-chart-typescript
@@ -65,6 +67,21 @@ const Home = ({ isLogin }) => {
     onChangeCompletion();
   }, [todoList]);
 
+  const onTodoCreated = () => {
+    const newTodo = {
+      id: uuidv4(),
+      title: "New Todo",
+      isCompleted: "false",
+      closingDate: GetDate.getDateFormatString(),
+      closingTime: "",
+      priority: "0",
+      repetitionType: "0",
+    };
+
+    SetTodoList((prev) => [...prev, newTodo]);
+    return newTodo;
+  };
+
   const onTodoChanged = (changedTodo) => {
     const newTodoList = todoList.map((todo) => {
       if (todo.id !== changedTodo.id) return todo;
@@ -103,6 +120,7 @@ const Home = ({ isLogin }) => {
         <div style={{ position: "relative" }}>
           <TodoFactory
             todoList={todoList}
+            onTodoCreated={onTodoCreated}
             onTodoChanged={onTodoChanged}
             onChangeCompletion={onChangeCompletion}
           />

@@ -6,10 +6,19 @@ import Todo from "components/Todo";
 import TodoMenuWrapper from "components/TodoMenuWrapper";
 import TodoCreation from "components/TodoCreation";
 
-const TodoFactory = ({ todoList, onTodoChanged, onChangeCompletion }) => {
+const TodoFactory = ({
+  todoList,
+  onTodoCreated,
+  onTodoChanged,
+  onChangeCompletion,
+}) => {
   const [clickedTodo, setClickedTodo] = useState();
   const [isTodoClicked, setIsTodoClicked] = useState(false);
-  const [isCreationClicked, setIsCreationClicked] = useState(false);
+
+  const onClickCreation = () => {
+    const createdNewTodo = onTodoCreated();
+    setClickedTodo(createdNewTodo);
+  };
 
   return (
     <Panel>
@@ -27,17 +36,13 @@ const TodoFactory = ({ todoList, onTodoChanged, onChangeCompletion }) => {
         />
       ))}
       <BottomToolBar>
-        {isCreationClicked ? (
-          <TodoCreation setIsCreationClicked={setIsCreationClicked} />
-        ) : (
-          <IoMdAddCircleOutline
-            size={22}
-            color={Theme.panelFont2Color}
-            opacity={0.5}
-            style={{ cursor: "pointer" }}
-            onClick={() => setIsCreationClicked(true)}
-          />
-        )}
+        <IoMdAddCircleOutline
+          size={22}
+          color={Theme.panelFont2Color}
+          opacity={0.5}
+          style={{ cursor: "pointer" }}
+          onClick={onClickCreation}
+        />
       </BottomToolBar>
       {isTodoClicked ? (
         <TodoMenuWrapper

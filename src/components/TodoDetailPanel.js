@@ -3,6 +3,7 @@ import onClickOutside from "react-onclickoutside";
 import useInput from "hooks/useInput";
 import useCheckbox from "hooks/useCheckbox";
 import styled from "styled-components";
+import GetDate from "GetDate";
 
 function TodoDetailPanel({ setIsTodoClicked, clickedTodo, onTodoChanged }) {
   TodoDetailPanel.handleClickOutside = () => setIsTodoClicked(false);
@@ -67,13 +68,7 @@ function TodoDetailPanel({ setIsTodoClicked, clickedTodo, onTodoChanged }) {
     if (existClosingDate.checked) {
       closingDate.onChange("");
     } else {
-      const today = new Date();
-      let yy = today.getFullYear();
-      let mm = today.getMonth() + 1;
-      if (mm < 10) mm = `0${mm}`;
-      let dd = today.getDate();
-      if (dd < 10) dd = `0${dd}`;
-      closingDate.onChange(`${yy}-${mm}-${dd}`);
+      closingDate.onChange(GetDate.getDateFormatString());
     }
   };
 
@@ -83,12 +78,7 @@ function TodoDetailPanel({ setIsTodoClicked, clickedTodo, onTodoChanged }) {
     if (existClosingTime.checked) {
       closingTime.onChange("");
     } else {
-      const today = new Date();
-      let hh = today.getHours();
-      if (hh < 10) hh = `0${hh}`;
-      let mm = today.getMinutes();
-      if (mm < 10) mm = `0${mm}`;
-      closingTime.onChange(`${hh}:${mm}`);
+      closingTime.onChange(GetDate.getTimeFormatString());
     }
   };
 

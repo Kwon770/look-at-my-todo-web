@@ -8,7 +8,7 @@ function TodoCreation({ setIsCreationClicked }) {
   return <div></div>;
 }
 
-const Wrapper = styled.div`
+const Container = styled.div`
   width: 100%;
 `;
 
