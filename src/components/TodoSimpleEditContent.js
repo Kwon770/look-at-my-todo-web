@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import onClickOutside from "react-onclickoutside";
 import useInput from "hooks/useInput";
@@ -41,23 +41,33 @@ function TodoSimpleEditContent({ todo, setSimpleEditMode, onTodoChanged }) {
       <Input title ref={titleInputRef} {...title} />
       <SimpleEditBoxWrapper>
         <SimpleEditBox>
-          <Input type="date" {...closingDate} />
+          <SimpleEditInput type="date" {...closingDate} />
         </SimpleEditBox>
         <SimpleEditBox>
-          <Input type="time" {...closingTime} />
+          <SimpleEditInput type="time" {...closingTime} />
         </SimpleEditBox>
         <SimpleEditBox>
-          <Input type="number" style={{ width: 35 }} {...priority} />
+          <SimpleEditInput type="number" style={{ width: 35 }} {...priority} />
         </SimpleEditBox>
       </SimpleEditBoxWrapper>
     </div>
   );
 }
 
+const SimpleEditInput = styled.input`
+  width: 100%;
+  border: 0px;
+  background-color: ${(props) => props.theme.panelBg2Color};
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const SimpleEditBox = styled.div`
   ${(props) => props.theme.RowCenterAlignment}
   border-radius: 4px;
-  padding: 4px 7px;
+  padding: 3px 5px;
   background-color: ${(props) => props.theme.panelBg2Color};
   color: ${(props) => props.theme.panelFont2Color};
   font-size: 12px;
