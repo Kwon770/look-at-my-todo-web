@@ -185,7 +185,7 @@ const Panel = styled.div`
   background-color: ${(props) => props.theme.panelBgColor};
   margin-bottom: 5vh;
   padding: 17px 11px;
-  overflow: scroll;
+  overflow-y: auto;
 `;
 
 const clickOutsideConfig = {

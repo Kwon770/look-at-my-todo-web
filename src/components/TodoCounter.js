@@ -6,8 +6,8 @@ const TodoCounter = ({ todoCount, completedTodoCount }) => {
     <ProgressWrapper>
       <DateWrapper>
         <AlignWrapper>
-          <DayOfWeek>Friday</DayOfWeek>
-          <Date>8th</Date>
+          <DayOfWeek>Wednesday</DayOfWeek>
+          <Date>27th</Date>
         </AlignWrapper>
         <Month>January</Month>
       </DateWrapper>

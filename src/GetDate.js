@@ -17,4 +17,6 @@ const getTimeFormatString = () => {
   return `${hh}:${mm}`;
 };
 
-export default { getDateFormatString, getTimeFormatString };
+const DateClass = { getDateFormatString, getTimeFormatString };
+
+export default DateClass;

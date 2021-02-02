@@ -95,7 +95,7 @@ const Home = ({ isLogin }) => {
     setTodoCount(todoList.length);
 
     let completedTodoCount = 0;
-    todoList.map((todo) => {
+    todoList.forEach((todo) => {
       if (todo.isCompleted === "true") completedTodoCount++;
     });
     setCompletedTodoCount(completedTodoCount);

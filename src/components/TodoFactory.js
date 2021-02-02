@@ -82,7 +82,7 @@ const Panel = styled.div`
   width: 50vw;
   height: 76.5vh;
   background-color: white;
-  overflow: scroll;
+  overflow-y: auto;
 `;
 
 export default TodoFactory;
