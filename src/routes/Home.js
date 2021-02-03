@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FcGoogle, FcExport } from "react-icons/fc";
 import { v4 as uuidv4 } from "uuid";
-import TodoFactory from "components/TodoFactory";
-import TodoCounter from "components/TodoCounter";
+import TodoFactory from "components/Todo/TodoFactory";
+import TodoCounter from "components/Todo/TodoCounter";
 import GetDate from "GetDate";
 
 // add visual chart
@@ -18,7 +18,6 @@ const tmpTodo = [
     closingDate: "2020-12-25",
     closingTime: "22:00",
     priority: "3",
-    repetitionType: "1",
   },
   {
     id: "2",
@@ -27,34 +26,6 @@ const tmpTodo = [
     closingDate: "2021-12-25",
     closingTime: "10:00",
     priority: "3",
-    repetitionType: "2",
-  },
-  {
-    id: "3",
-    title: "secondCode",
-    isCompleted: "false",
-    closingDate: "2020-12-25",
-    closingTime: "22:00",
-    priority: "3",
-    repetitionType: "3",
-    specialRepetition: {
-      periodType: "1",
-      repetitionTerm: "2",
-    },
-  },
-  {
-    id: "4",
-    title: "weekendCode",
-    isCompleted: "false",
-    closingDate: "2021-12-25",
-    closingTime: "10:00",
-    priority: "3",
-    repetitionType: "3",
-    specialRepetition: {
-      periodType: "2",
-      repetitionTerm: "1",
-      detailTerm: ["0", "6"],
-    },
   },
 ];
 
@@ -154,7 +125,7 @@ const Header = styled.div`
   width: 100%;
   height: 50px;
   background-color: ${(props) => props.theme.deepBgColor};
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  ${(props) => props.theme.UiShadow}
 `;
 
 const Page = styled.div`

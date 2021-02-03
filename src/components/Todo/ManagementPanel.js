@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const TodoManagementPanel = () => {
+const ManagementPanel = () => {
   return (
     <Panel>
       <RowWrapper>
@@ -54,4 +54,4 @@ const Panel = styled.div`
   background-color: ${(props) => props.theme.panelBgColor};
 `;
 
-export default TodoManagementPanel;
+export default ManagementPanel;

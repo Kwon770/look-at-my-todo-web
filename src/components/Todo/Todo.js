@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
-import TodoSimpleEditContent from "components/TodoSimpleEditContent";
+import SimpleEditContent from "components/Todo/SimpleEditContent";
+import ToggleButton from "./ToggleButton";
+import Title from "./Title";
+import TimeData from "./TimeData";
 
 const Todo = ({
   todo,
@@ -36,22 +39,24 @@ const Todo = ({
   return (
     <Container>
       <LeftWrapper>
-        <Icon completed={todo.isCompleted} onClick={onToogleCompletion}>
-          {todo.isCompleted === "true" ? <FilledCircle /> : ""}
-        </Icon>
+        <ToggleButton
+          completed={todo.isCompleted}
+          onClick={onToogleCompletion}
+        />
         <ContentWrapper>
           {simpleEditMode ? (
-            <TodoSimpleEditContent
+            <SimpleEditContent
               todo={todo}
               setSimpleEditMode={setSimpleEditMode}
               onTodoChanged={onTodoChanged}
             />
           ) : (
             <div onClick={() => setSimpleEditMode(true)}>
-              <Title completed={todo.isCompleted}>{todo.title}</Title>
-              <TimeData>
-                {todo.closingDate}/{todo.closingTime}
-              </TimeData>
+              <Title completed={todo.isCompleted} title={todo.title} />
+              <TimeData
+                closingDate={todo.closingDate}
+                closingTime={todo.closingTime}
+              />
             </div>
           )}
         </ContentWrapper>
@@ -68,48 +73,10 @@ const Todo = ({
   );
 };
 
-const TimeData = styled.h3`
-  color: ${(props) => props.theme.panelFont2Color};
-  font-size: 14px;
-  margin-top: 4px;
-  opacity: 0.8;
-`;
-
-const Title = styled.h3`
-  text-decoration-line: ${(props) =>
-    props.completed === "true" ? "line-through" : ""};
-  text-decoration-thickness: 1.5px;
-  color: ${(props) =>
-    props.completed === "true"
-      ? props.theme.panelBg3Color
-      : props.theme.panelFontColor};
-  font-size: 18px;
-`;
-
 const ContentWrapper = styled.div`
   ${(props) => props.theme.ColumnCenterAlignment};
   align-items: flex-start;
   padding-left: 13px;
-`;
-
-const FilledCircle = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.hl2Color};
-`;
-
-const Icon = styled.div`
-  ${(props) => props.theme.ColumnCenterAlignment};
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  border: solid 1px
-    ${(props) =>
-      props.completed === true
-        ? props.theme.hl2Color
-        : props.theme.panelBg3Color};
-  cursor: pointer;
 `;
 
 const LeftWrapper = styled.div`

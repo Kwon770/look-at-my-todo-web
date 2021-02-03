@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import DetailPanel from "components/TodoDetailPanel";
-import ManagementPanel from "components/TodoManagementPanel";
+import DetailPanel from "components/Todo/DetailPanel";
+import ManagementPanel from "components/Todo/ManagementPanel";
 
-const TodoMenuWrapper = ({ setIsTodoClicked, clickedTodo, onTodoChanged }) => {
+const MenuWrapper = ({ setIsTodoClicked, clickedTodo, onTodoChanged }) => {
   return (
     <PanelHolder>
       <DetailPanel
@@ -27,4 +27,4 @@ const PanelHolder = styled.div`
   left: 53.6vw;
   z-index: 10;
 `;
-export default TodoMenuWrapper;
+export default MenuWrapper;

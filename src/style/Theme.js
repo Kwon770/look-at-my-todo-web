@@ -31,6 +31,7 @@ const ui = {
   RoundBoxRadius: `
   border-radius: 20px;
   `,
+  UiShadow: `box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;`,
   TodoInput: `
   border: 0px;
   color: ${pallete.panelFontColor};

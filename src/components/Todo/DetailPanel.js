@@ -5,8 +5,8 @@ import useCheckbox from "hooks/useCheckbox";
 import styled from "styled-components";
 import GetDate from "GetDate";
 
-function TodoDetailPanel({ setIsTodoClicked, clickedTodo, onTodoChanged }) {
-  TodoDetailPanel.handleClickOutside = () => setIsTodoClicked(false);
+function DetailPanel({ setIsTodoClicked, clickedTodo, onTodoChanged }) {
+  DetailPanel.handleClickOutside = () => setIsTodoClicked(false);
   const titleInputRef = useRef();
   useEffect(() => {
     titleInputRef.current.focus();
@@ -189,6 +189,6 @@ const Panel = styled.div`
 `;
 
 const clickOutsideConfig = {
-  handleClickOutside: () => TodoDetailPanel.handleClickOutside,
+  handleClickOutside: () => DetailPanel.handleClickOutside,
 };
-export default onClickOutside(TodoDetailPanel, clickOutsideConfig);
+export default onClickOutside(DetailPanel, clickOutsideConfig);

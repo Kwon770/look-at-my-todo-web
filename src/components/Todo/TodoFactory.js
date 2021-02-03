@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Theme from "style/Theme";
-import Todo from "components/Todo";
-import TodoMenuWrapper from "components/TodoMenuWrapper";
-import TodoCreation from "components/TodoCreation";
+import Todo from "components/Todo/Todo";
+import ManagementPanel from "components/Todo/MenuWrapper";
+import TodoCreation from "components/Todo/TodoCreation";
 
 const TodoFactory = ({
   todoList,
@@ -45,7 +45,7 @@ const TodoFactory = ({
         />
       </BottomToolBar>
       {isTodoClicked ? (
-        <TodoMenuWrapper
+        <ManagementPanel
           setIsTodoClicked={setIsTodoClicked}
           clickedTodo={clickedTodo}
           onTodoChanged={onTodoChanged}

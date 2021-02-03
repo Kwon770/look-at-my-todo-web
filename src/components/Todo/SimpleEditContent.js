@@ -3,8 +3,8 @@ import styled from "styled-components";
 import onClickOutside from "react-onclickoutside";
 import useInput from "hooks/useInput";
 
-function TodoSimpleEditContent({ todo, setSimpleEditMode, onTodoChanged }) {
-  TodoSimpleEditContent.handleClickOutside = () => setSimpleEditMode(false);
+function SimpleEditContent({ todo, setSimpleEditMode, onTodoChanged }) {
+  SimpleEditContent.handleClickOutside = () => setSimpleEditMode(false);
   const titleInputRef = useRef();
   useEffect(() => {
     titleInputRef.current.focus();
@@ -89,6 +89,6 @@ const Input = styled.input`
 `;
 
 const clickOutsideConfig = {
-  handleClickOutside: () => TodoSimpleEditContent.handleClickOutside,
+  handleClickOutside: () => SimpleEditContent.handleClickOutside,
 };
-export default onClickOutside(TodoSimpleEditContent, clickOutsideConfig);
+export default onClickOutside(SimpleEditContent, clickOutsideConfig);
