@@ -7,10 +7,10 @@ const Router = ({ isLogin }) => (
   <HashRouter>
     <Switch>
       <Route exact path="/">
-        <Home isLogin={isLogin} />
-      </Route>
-      <Route exact path="/rank">
         <Rank />
+      </Route>
+      <Route exact path="/todo">
+        <Home isLogin={isLogin} />
       </Route>
       <Redirect from="*" to="/" />
     </Switch>
