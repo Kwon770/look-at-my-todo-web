@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { Button, Snackbar } from "@material-ui/core";
+import { Button, Snackbar, Avatar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import { FcGoogle } from "react-icons/fc";
 import RankerHolder from "../components/Rank/RankerHolder";
@@ -10,6 +10,7 @@ import {
   useOnLoginFail,
   useOnLogoutSuccess,
   useIsLoggedIn,
+  useProfile,
 } from "../components/AuthContext";
 
 function Alert(props) {
@@ -49,12 +50,13 @@ const tmpRankerTodo = [
 ];
 
 const Rank = ({ topRanker = tmpRanker }) => {
+  const GOOGLE_ID =
+    "361160379535-hlb1o4ae45k8148upclidimheeuira9n.apps.googleusercontent.com";
   const onLoginSuccess = useOnLoginSuccess();
   const onLoginFail = useOnLoginFail();
   const onLogoutSuccess = useOnLogoutSuccess();
   const isLoggedIn = useIsLoggedIn();
-  const GOOGLE_ID =
-    "361160379535-hlb1o4ae45k8148upclidimheeuira9n.apps.googleusercontent.com";
+  const profile = useProfile();
 
   const [loginSnackbarOpen, setLoginSnackbarOpen] = useState(false);
   const handleLoginSuccess = (response) => {
@@ -98,6 +100,14 @@ const Rank = ({ topRanker = tmpRanker }) => {
         </Alert>
       </Snackbar>
       <Header>
+        {isLoggedIn ? (
+          <Profile>
+            <Avatar src={profile.picture} style={{ marginRight: 15 }} />
+            <h2>{profile.name}</h2>
+          </Profile>
+        ) : (
+          <div></div>
+        )}
         {isLoggedIn ? (
           <GoogleLogout
             clientId={GOOGLE_ID}
@@ -170,6 +180,10 @@ const Greeting = styled.div`
   height: 300px;
   font-size: 50px;
   font-weight: 800;
+`;
+
+const Profile = styled.div`
+  ${(props) => props.theme.RowCenterAlignment}
 `;
 
 const Header = styled.div`

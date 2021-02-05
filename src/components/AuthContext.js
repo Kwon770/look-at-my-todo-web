@@ -2,25 +2,25 @@ import React, { createContext, useContext, useState } from "react";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ isLoggedIn: initIsLoggedIn, children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(initIsLoggedIn);
+export const AuthProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profile, setProfile] = useState({
     email: "",
     name: "",
-    profile: "",
+    picture: "",
   });
 
   const onLoginSuccess = (response) => {
     try {
       const {
-        profileObj: { email, name, imageUrl },
+        profileObj: { email, name, pictureUrl },
         tokenObj: { access_token },
       } = response;
 
       setProfile({
         email,
         name,
-        imageUrl,
+        picture: pictureUrl,
       });
 
       // send login or signup request to server
@@ -43,6 +43,24 @@ export const AuthProvider = ({ isLoggedIn: initIsLoggedIn, children }) => {
     localStorage.removeItem("token");
   };
 
+  const loadProfile = async (token) => {
+    try {
+      const user = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const { email, name, picture } = await user.json();
+      setProfile({ email, name, picture });
+      setIsLoggedIn(true);
+    } catch (e) {
+      console.log(e);
+      setProfile({
+        email: "failed",
+        name: "failed",
+        picture: "",
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -51,11 +69,24 @@ export const AuthProvider = ({ isLoggedIn: initIsLoggedIn, children }) => {
         onLoginSuccess,
         onLoginFail,
         onLogoutSuccess,
+        loadProfile,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const checkTokenAvailable = async (token) => {
+  const user = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const { id } = await user.json();
+
+  // Check whether there is id from db.
+
+  if (id !== undefined) return true;
+  else return false;
 };
 
 export const useIsLoggedIn = () => {
@@ -81,4 +112,9 @@ export const useOnLoginFail = () => {
 export const useOnLogoutSuccess = () => {
   const { onLogoutSuccess } = useContext(AuthContext);
   return onLogoutSuccess;
+};
+
+export const useLoadProfile = () => {
+  const { loadProfile } = useContext(AuthContext);
+  return loadProfile;
 };

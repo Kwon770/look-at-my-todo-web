@@ -29,6 +29,7 @@ const tmpTodo = [
   },
 ];
 
+// isLoggedIn REMOVED
 const Home = ({ isLoggedIn }) => {
   const [todoList, SetTodoList] = useState(tmpTodo);
   const [todoCount, setTodoCount] = useState(0);
