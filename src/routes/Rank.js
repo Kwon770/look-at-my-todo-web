@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { GoogleLogin } from "react-google-login";
-import { Button } from "@material-ui/core";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { Button, Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import { FcGoogle } from "react-icons/fc";
 import RankerHolder from "../components/Rank/RankerHolder";
 import {
   useOnLoginSuccess,
   useOnLoginFail,
+  useOnLogoutSuccess,
   useIsLoggedIn,
 } from "../components/AuthContext";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const tmpRanker = [
   {
@@ -45,27 +51,86 @@ const tmpRankerTodo = [
 const Rank = ({ topRanker = tmpRanker }) => {
   const onLoginSuccess = useOnLoginSuccess();
   const onLoginFail = useOnLoginFail();
+  const onLogoutSuccess = useOnLogoutSuccess();
   const isLoggedIn = useIsLoggedIn();
+  const GOOGLE_ID =
+    "361160379535-hlb1o4ae45k8148upclidimheeuira9n.apps.googleusercontent.com";
+
+  const [loginSnackbarOpen, setLoginSnackbarOpen] = useState(false);
+  const handleLoginSuccess = (response) => {
+    setLoginSnackbarOpen(true);
+    onLoginSuccess(response);
+  };
+  const handleLoginSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") return;
+
+    setLoginSnackbarOpen(false);
+  };
+  const [logoutSnackbarOpen, setLogoutSnackbarOpen] = useState(false);
+  const handleLogoutSuccess = (response) => {
+    setLogoutSnackbarOpen(true);
+    onLogoutSuccess(response);
+  };
+  const handleLogoutSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") return;
+
+    setLogoutSnackbarOpen(false);
+  };
 
   return (
     <Container>
+      <Snackbar
+        open={loginSnackbarOpen}
+        autoHideDuration={3300}
+        onClose={handleLoginSnackBarClose}
+      >
+        <Alert onClose={handleLoginSnackBarClose} severity="success">
+          🙋‍♂️ Logged in successfully !
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={logoutSnackbarOpen}
+        autoHideDuration={3300}
+        onClose={handleLogoutSnackBarClose}
+      >
+        <Alert onClose={handleLogoutSnackBarClose} severity="success">
+          👋 Logged out successfully !
+        </Alert>
+      </Snackbar>
       <Header>
-        <GoogleLogin
-          clientId="361160379535-hlb1o4ae45k8148upclidimheeuira9n.apps.googleusercontent.com"
-          onSuccess={onLoginSuccess}
-          onFailure={onLoginFail}
-          cookiePolicy={"single_host_origin"}
-          render={(renderProps) => (
-            <Button
-              onClick={renderProps.onClick}
-              disabled={renderProps.disabled}
-              startIcon={<FcGoogle />}
-              style={{ color: "#FFFFFF" }}
-            >
-              Login
-            </Button>
-          )}
-        />
+        {isLoggedIn ? (
+          <GoogleLogout
+            clientId={GOOGLE_ID}
+            onLogoutSuccess={handleLogoutSuccess}
+            render={(renderProps) => (
+              <Button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                startIcon={<FcGoogle />}
+                style={{ color: "#FFFFFF" }}
+              >
+                Logout
+              </Button>
+            )}
+          />
+        ) : (
+          <GoogleLogin
+            clientId={GOOGLE_ID}
+            onSuccess={handleLoginSuccess}
+            onFailure={onLoginFail}
+            cookiePolicy={"single_host_origin"}
+            render={(renderProps) => (
+              <Button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                startIcon={<FcGoogle />}
+                style={{ color: "#FFFFFF" }}
+              >
+                Login
+              </Button>
+            )}
+          />
+        )}
       </Header>
       <Greeting>🔥 Look At My Todo 🔥</Greeting>
       <RankerTitle>👑 Top 10 Ranker 👑</RankerTitle>

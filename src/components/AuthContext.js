@@ -26,6 +26,7 @@ export const AuthProvider = ({ isLoggedIn: initIsLoggedIn, children }) => {
       // send login or signup request to server
 
       localStorage.setItem("token", access_token);
+      setIsLoggedIn(true);
     } catch (e) {
       console.log("[Error] Failed parsing the login data : ", e);
     }
@@ -35,9 +36,22 @@ export const AuthProvider = ({ isLoggedIn: initIsLoggedIn, children }) => {
     console.log("[Error] Failed trying to login : ", e);
   };
 
+  const onLogoutSuccess = (response) => {
+    console.log(response);
+
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  };
+
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, profile, onLoginSuccess, onLoginFail }}
+      value={{
+        isLoggedIn,
+        profile,
+        onLoginSuccess,
+        onLoginFail,
+        onLogoutSuccess,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -62,4 +76,9 @@ export const useOnLoginSuccess = () => {
 export const useOnLoginFail = () => {
   const { onLoginFail } = useContext(AuthContext);
   return onLoginFail;
+};
+
+export const useOnLogoutSuccess = () => {
+  const { onLogoutSuccess } = useContext(AuthContext);
+  return onLogoutSuccess;
 };
