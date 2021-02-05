@@ -29,7 +29,7 @@ const tmpTodo = [
   },
 ];
 
-const Home = ({ isLogin }) => {
+const Home = ({ isLoggedIn }) => {
   const [todoList, SetTodoList] = useState(tmpTodo);
   const [todoCount, setTodoCount] = useState(0);
   const [completedTodoCount, setCompletedTodoCount] = useState(0);
@@ -75,12 +75,12 @@ const Home = ({ isLogin }) => {
   return (
     <>
       <Header>
-        <h1>{isLogin ? "Hello, USER!" : ""}</h1>
+        <h1>{isLoggedIn ? "Hello, USER!" : ""}</h1>
         <HeaderRightWrapper>
           <h1 style={{ marginRight: 10, cursor: "default" }}>
-            {isLogin ? "Log out from" : "Log in from"}
+            {isLoggedIn ? "Log out from" : "Log in from"}
           </h1>
-          {isLogin ? (
+          {isLoggedIn ? (
             <FcExport size={28} style={{ cursor: "pointer" }} />
           ) : (
             <FcGoogle size={28} style={{ cursor: "pointer" }} />

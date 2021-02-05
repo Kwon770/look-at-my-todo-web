@@ -1,6 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { GoogleLogin } from "react-google-login";
+import { Button } from "@material-ui/core";
+import { FcGoogle } from "react-icons/fc";
 import RankerHolder from "../components/Rank/RankerHolder";
+import {
+  useOnLoginSuccess,
+  useOnLoginFail,
+  useIsLoggedIn,
+} from "../components/AuthContext";
 
 const tmpRanker = [
   {
@@ -35,9 +43,30 @@ const tmpRankerTodo = [
 ];
 
 const Rank = ({ topRanker = tmpRanker }) => {
+  const onLoginSuccess = useOnLoginSuccess();
+  const onLoginFail = useOnLoginFail();
+  const isLoggedIn = useIsLoggedIn();
+
   return (
     <Container>
-      <Header></Header>
+      <Header>
+        <GoogleLogin
+          clientId="361160379535-hlb1o4ae45k8148upclidimheeuira9n.apps.googleusercontent.com"
+          onSuccess={onLoginSuccess}
+          onFailure={onLoginFail}
+          cookiePolicy={"single_host_origin"}
+          render={(renderProps) => (
+            <Button
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              startIcon={<FcGoogle />}
+              style={{ color: "#FFFFFF" }}
+            >
+              Login
+            </Button>
+          )}
+        />
+      </Header>
       <Greeting>🔥 Look At My Todo 🔥</Greeting>
       <RankerTitle>👑 Top 10 Ranker 👑</RankerTitle>
       <Grid>

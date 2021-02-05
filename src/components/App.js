@@ -3,9 +3,10 @@ import Router from "components/Router";
 import { ThemeProvider } from "styled-components";
 import Theme from "style/Theme";
 import GlobalStyles from "style/GlobalStyles";
+import { AuthProvider } from "./AuthContext";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLoggedIn, setIsLogin] = useState(false);
 
   useEffect(() => {
     // check whether the user is Log in
@@ -15,7 +16,9 @@ function App() {
   return (
     <>
       <ThemeProvider theme={Theme}>
-        <Router isLogin={isLogin} />
+        <AuthProvider isLoggedIn={isLoggedIn}>
+          <Router />
+        </AuthProvider>
         <GlobalStyles />
       </ThemeProvider>
     </>
