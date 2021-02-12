@@ -1,3 +1,4 @@
+import { requestLoginApi } from "api/ApiService";
 import React, { createContext, useContext, useState } from "react";
 
 export const AuthContext = createContext();
@@ -10,20 +11,13 @@ export const AuthProvider = ({ children }) => {
     picture: "",
   });
 
-  const onLoginSuccess = (response) => {
+  const onLoginSuccess = (name, email, picture, access_token) => {
     try {
-      const {
-        profileObj: { email, name, pictureUrl },
-        tokenObj: { access_token },
-      } = response;
-
       setProfile({
-        email,
         name,
-        picture: pictureUrl,
+        email,
+        picture,
       });
-
-      // send login or signup request to server
 
       localStorage.setItem("token", access_token);
       setIsLoggedIn(true);
@@ -87,6 +81,18 @@ export const checkTokenAvailable = async (token) => {
 
   if (id !== undefined) return true;
   else return false;
+};
+
+export const requestLogin = (name, email, picture) => {
+  try {
+    const request = requestLoginApi(name, email, picture);
+    if (request.status !== 200) throw "SEVER CONNECTION FAILED";
+
+    return true;
+  } catch (e) {
+    console.log("[Error] Sever : ", e);
+    return false;
+  }
 };
 
 export const useIsLoggedIn = () => {

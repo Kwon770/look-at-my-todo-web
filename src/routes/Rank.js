@@ -11,6 +11,7 @@ import {
   useOnLogoutSuccess,
   useIsLoggedIn,
   useProfile,
+  requestLogin,
 } from "../components/AuthContext";
 
 function Alert(props) {
@@ -59,15 +60,31 @@ const Rank = ({ topRanker = tmpRanker }) => {
   const profile = useProfile();
 
   const [loginSnackbarOpen, setLoginSnackbarOpen] = useState(false);
+  const [failSnackbarOpen, setFailSnackbarOpen] = useState(false);
   const handleLoginSuccess = (response) => {
-    setLoginSnackbarOpen(true);
-    onLoginSuccess(response);
+    const {
+      profileObj: { name, email, imageUrl },
+      tokenObj: { access_token },
+    } = response;
+
+    if (requestLogin(name, email, imageUrl)) {
+      onLoginSuccess(name, email, imageUrl, access_token);
+      setLoginSnackbarOpen(true);
+    } else {
+      setFailSnackbarOpen(true);
+    }
   };
   const handleLoginSnackBarClose = (event, reason) => {
     if (reason === "clickaway") return;
 
     setLoginSnackbarOpen(false);
   };
+  const handleFailSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") return;
+
+    setFailSnackbarOpen(false);
+  };
+
   const [logoutSnackbarOpen, setLogoutSnackbarOpen] = useState(false);
   const handleLogoutSuccess = (response) => {
     setLogoutSnackbarOpen(true);
@@ -99,6 +116,16 @@ const Rank = ({ topRanker = tmpRanker }) => {
           👋 Logged out successfully !
         </Alert>
       </Snackbar>
+      <Snackbar
+        open={failSnackbarOpen}
+        autoHideDuration={3300}
+        onClose={handleFailSnackBarClose}
+      >
+        <Alert onClose={handleFailSnackBarClose} severity="error">
+          🚨　Network failed !
+        </Alert>
+      </Snackbar>
+      {/* SNACKBAR ALARM ZONE */}
       <Header>
         {isLoggedIn ? (
           <Profile>
